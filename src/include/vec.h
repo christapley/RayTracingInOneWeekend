@@ -6,7 +6,7 @@
 namespace tapley {
 
 using value_type = double;
-	
+    
 class Vec3 {
 public:
     Vec3() {}
@@ -23,8 +23,8 @@ public:
     inline value_type operator[](int i) const { return e[i]; }
     inline value_type& operator[](int i) { return e[i]; }
 
-	inline bool operator==(const Vec3 &v2) const;
-	inline bool operator!=(const Vec3 &v2) const;
+    inline bool operator==(const Vec3 &v2) const;
+    inline bool operator!=(const Vec3 &v2) const;
     inline Vec3& operator+=(const Vec3 &v2);
     inline Vec3& operator-=(const Vec3 &v2);
     inline Vec3& operator*=(const Vec3 &v2);
@@ -41,12 +41,12 @@ public:
 
 inline bool Vec3::operator==(const Vec3 &v2) const
 {
-	return e[0] == v2.e[0] && e[1] == v2.e[1] && e[2] == v2.e[2];
+    return e[0] == v2.e[0] && e[1] == v2.e[1] && e[2] == v2.e[2];
 }
 
 inline bool Vec3::operator!=(const Vec3 &v2) const
 {
-	return e[0] != v2.e[0] || e[1] != v2.e[1] || e[2] != v2.e[2];
+    return e[0] != v2.e[0] || e[1] != v2.e[1] || e[2] != v2.e[2];
 }
 
 inline std::istream& operator>>(std::istream &is, Vec3 &t) {

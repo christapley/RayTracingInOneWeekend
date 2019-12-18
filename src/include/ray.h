@@ -5,20 +5,20 @@
 namespace tapley {
 
 struct Ray {
-	Vec3 _origin;
-	Vec3 _direction;
+    Vec3 _origin;
+    Vec3 _direction;
 
-	const Vec3 &origin() const { return _origin; }
-	const Vec3 &direction() const { return _direction; }
-	
-	Ray() = default;
-	Ray(const Ray &) = default;
-	Ray(const Vec3& a, const Vec3& b) : _origin(a), _direction(b)
-	{}
-	
-	Vec3 at(const value_type t) const {
-		return _origin + (_direction * t);
-	}
+    const Vec3 &origin() const { return _origin; }
+    const Vec3 &direction() const { return _direction; }
+    
+    Ray() = default;
+    Ray(const Ray &) = default;
+    Ray(const Vec3& a, const Vec3& b) : _origin(a), _direction(b)
+    {}
+    
+    Vec3 at(const value_type t) const {
+        return _origin + (_direction * t);
+    }
 };
 
 static Vec3 color(const Ray& ray) {
