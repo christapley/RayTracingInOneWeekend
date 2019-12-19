@@ -32,9 +32,12 @@ public:
     inline Vec3& operator*=(const value_type t);
     inline Vec3& operator/=(const value_type t);
 
-    inline value_type length() const { return sqrt(e[0]*e[0] + e[1]*e[1] + e[2]*e[2]); }
+    inline value_type length() const { return std::hypot(e[0], e[1], e[2]); }
     inline value_type squared_length() const { return e[0]*e[0] + e[1]*e[1] + e[2]*e[2]; }
-    inline void make_unit_vector();
+    inline void make_unit_vector() {
+		const value_type k = 1.0 / length();
+		e[0] *= k; e[1] *= k; e[2] *= k;
+	}
 
     value_type e[3];
 };
@@ -57,11 +60,6 @@ inline std::istream& operator>>(std::istream &is, Vec3 &t) {
 inline std::ostream& operator<<(std::ostream &os, const Vec3 &t) {
     os << t.e[0] << " " << t.e[1] << " " << t.e[2];
     return os;
-}
-
-inline void Vec3::make_unit_vector() {
-    value_type k = 1.0 / sqrt(e[0]*e[0] + e[1]*e[1] + e[2]*e[2]);
-    e[0] *= k; e[1] *= k; e[2] *= k;
 }
 
 inline Vec3 operator+(const Vec3 &v1, const Vec3 &v2) {
