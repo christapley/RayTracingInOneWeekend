@@ -1,12 +1,12 @@
 #pragma once
 
+#include "types.h"
+
 #include <cmath>
 #include <sstream>
 
 namespace tapley {
-
-using value_type = double;
-    
+  
 class Vec3 {
 public:
     Vec3() {}
