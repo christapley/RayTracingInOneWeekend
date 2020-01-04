@@ -1,6 +1,7 @@
 #include "hittablelist.h"
 #include "sphere.h"
 #include "camera.h"
+#include "lambertian.h"
 
 #include "gtest/gtest.h"
 
@@ -24,8 +25,8 @@ Vec3 hittable_color(const Ray& r, Hittable *world) {
 
 TEST(QAhittable, hittableList)
 {
-    int nx = 1000;
-    int ny = 500;
+    int nx = 100;
+    int ny = 50;
     
     std::vector<uint8_t> rawBmp(nx * ny * 3);
     
@@ -35,8 +36,8 @@ TEST(QAhittable, hittableList)
     Vec3 origin(0.0, 0.0, 0.0);
     
 	HittableList hittables{
-		new Sphere(Vec3(0,0,-1), 0.5),
-		new Sphere(Vec3(0,-100.5,-1), 100)
+		new Sphere(Vec3(0,0,-1), 0.5, new Lambertian({0.8, 0.3, 0.3})),
+		new Sphere(Vec3(0,-100.5,-1), 100, new Lambertian({0.8, 0.8, 0.0}))
 	};
 	
     auto *bmpData = rawBmp.data();
@@ -62,8 +63,8 @@ TEST(QAhittable, hittableList)
 
 TEST(QAhittable, antialias)
 {
-    int nx = 1000;
-    int ny = 500;
+    int nx = 100;
+    int ny = 50;
     int ns = 100;
 	
     std::vector<uint8_t> rawBmp(nx * ny * 3);
@@ -74,8 +75,8 @@ TEST(QAhittable, antialias)
     Vec3 origin(0.0, 0.0, 0.0);
     
 	HittableList hittables{
-		new Sphere(Vec3(0,0,-1), 0.5),
-		new Sphere(Vec3(0,-100.5,-1), 100)
+		new Sphere(Vec3(0,0,-1), 0.5, new Lambertian({0.8, 0.3, 0.3})),
+		new Sphere(Vec3(0,-100.5,-1), 100, new Lambertian({0.8, 0.8, 0.0}))
 	};
 	Camera cam;
     auto *bmpData = rawBmp.data();
@@ -101,14 +102,6 @@ TEST(QAhittable, antialias)
     bmpEncoder.Write();
 }
 
-Vec3 random_in_unit_sphere() {
-    Vec3 p;
-    do {
-        p = 2.0*Vec3(random_double(), random_double(), random_double()) - Vec3(1,1,1);
-    } while (p.squared_length() >= 1.0);
-    return p;
-}
-
 Vec3 hittable_color_diffuse(const Ray& r, Hittable *world) {
     hit_record rec;
     if (world->hit(r, 0.0001, std::numeric_limits<value_type>::max(), rec)) {
@@ -124,9 +117,9 @@ Vec3 hittable_color_diffuse(const Ray& r, Hittable *world) {
 
 TEST(QAhittable, diffuse)
 {
-    int nx = 1000;
-    int ny = 500;
-    int ns = 100;
+    int nx = 100;
+    int ny = 50;
+    int ns = 200;
 	
     std::vector<uint8_t> rawBmp(nx * ny * 3);
     
@@ -136,8 +129,8 @@ TEST(QAhittable, diffuse)
     Vec3 origin(0.0, 0.0, 0.0);
     
 	HittableList hittables{
-		new Sphere(Vec3(0,0,-1), 0.5),
-		new Sphere(Vec3(0,-100.5,-1), 100)
+		new Sphere(Vec3(0,0,-1), 0.5, new Lambertian({0.8, 0.3, 0.3})),
+		new Sphere(Vec3(0,-100.5,-1), 100, new Lambertian({0.8, 0.8, 0.0}))
 	};
 	Camera cam;
     auto *bmpData = rawBmp.data();

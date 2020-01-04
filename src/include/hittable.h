@@ -4,10 +4,13 @@
 
 namespace tapley {
 
+class Material;
+
 struct hit_record {
     value_type t;
     Vec3 p;
     Vec3 normal;
+	Material *material;
 };
 
 class Hittable {

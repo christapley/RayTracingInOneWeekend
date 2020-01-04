@@ -26,6 +26,7 @@ add_executable(
   test/vecTest.cpp
   test/rayTest.cpp
   test/hittableTest.cpp
+  test/metalTest.cpp
 )
 target_include_directories(
   rayTest

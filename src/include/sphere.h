@@ -1,13 +1,13 @@
 #pragma once
 
-#include "hittable.h"
+#include "material.h"
 
 namespace tapley {
 
 class Sphere: public Hittable  {
 public:
     Sphere() = delete;
-    Sphere(Vec3 cen, value_type r) : center(cen), radius(r) {}
+    Sphere(Vec3 cen, value_type r, Material *mat) : center(cen), radius(r), material(mat) {}
 	virtual ~Sphere() = default;
 
     Sphere(const Sphere &) = default;
@@ -28,6 +28,7 @@ public:
 				rec.t = temp;
 				rec.p = r.point_at_parameter(rec.t);
 				rec.normal = (rec.p - center) / radius;
+				rec.material = material;
 				return true;
 			}
 			temp = (-b + sqrt(discriminant)) / a;
@@ -35,6 +36,7 @@ public:
 				rec.t = temp;
 				rec.p = r.point_at_parameter(rec.t);
 				rec.normal = (rec.p - center) / radius;
+				rec.material = material;
 				return true;
 			}
 		}
@@ -43,6 +45,7 @@ public:
     
 	Vec3 center;
     value_type radius;
+	Material *material{nullptr};
 };
 
 
