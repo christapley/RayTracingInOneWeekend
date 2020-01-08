@@ -42,17 +42,17 @@ public:
 
 		if (refract(r_in.direction(), outward_normal, ni_over_nt, refracted)) {
                reflect_prob = schlick(cosine, ref_idx);
-            }
-            else {
-               reflect_prob = 1.0;
-            }
+		}
+		else {
+		   reflect_prob = 1.0;
+		}
 
-            if (random_double() < reflect_prob) {
-               scattered = Ray(rec.p, reflected);
-            }
-            else {
-               scattered = Ray(rec.p, refracted);
-            }
+		if (random_double() < reflect_prob) {
+		   scattered = Ray(rec.p, reflected);
+		}
+		else {
+		   scattered = Ray(rec.p, refracted);
+		}
 
 		return true;
     } 

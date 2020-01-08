@@ -12,6 +12,14 @@ inline Vec3 random_in_unit_sphere() {
     return p;
 }
 
+inline Vec3 random_in_unit_disk() {
+    Vec3 p;
+    do {
+        p = 2.0*Vec3(random_double(),random_double(),0) - Vec3(1,1,0);
+    } while (dot(p,p) >= 1.0);
+    return p;
+}
+
 inline bool refract(const Vec3& v, const Vec3& n, value_type ni_over_nt, Vec3& refracted) {
     Vec3 uv = unit_vector(v);
     const auto dt = dot(uv, n);

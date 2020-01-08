@@ -5,6 +5,9 @@ set BUILD_DIR=%cd%\build
 
 %CMAKE_DIR%\cmake --build %BUILD_DIR% --config %1
 pushd %BUILD_DIR%\src
-%CMAKE_DIR%\ctest 
+rem %CMAKE_DIR%\ctest 
 popd
 
+pushd %BUILD_DIR%\src\%1
+rayTest.exe --gtest_filter=QAcamera.randomScene
+popd

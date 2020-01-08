@@ -15,9 +15,9 @@ public:
 		origin = Vec3(0.0, 0.0, 0.0);
 	}
 	
-	Camera(Vec3 lookfrom, Vec3 lookat, Vec3 vup, value_type vfov, value_type aspect) {
+	Camera(Vec3 lookfrom, Vec3 lookat, Vec3 vup, value_type vfov, value_type aspect, value_type aperture, value_type focus_dist) {
 		// vfov is top to bottom in degrees
-		Vec3 u, v, w;
+		lens_radius = aperture / 2;
 		value_type theta = vfov*M_PI/180;
 		value_type half_height = tan(theta/2);
 		value_type half_width = aspect * half_height;
@@ -25,15 +25,20 @@ public:
 		w = unit_vector(lookfrom - lookat);
 		u = unit_vector(cross(vup, w));
 		v = cross(w, u);
-		lower_left_corner = origin - half_width*u - half_height*v - w;
-		horizontal = 2*half_width*u;
-		vertical = 2*half_height*v;
+		lower_left_corner = origin
+                            - half_width * focus_dist * u
+                            - half_height * focus_dist * v
+                            - focus_dist * w;
+        horizontal = 2*half_width*focus_dist*u;
+        vertical = 2*half_height*focus_dist*v;
 	}
 	
-	Ray get_ray(value_type u, value_type v) {
+	Ray get_ray(value_type s, value_type t) {
+		auto rd = lens_radius*random_in_unit_disk();
+        auto offset = u * rd.x() + v * rd.y();
 		return {
-			origin,
-			lower_left_corner + u*horizontal + v*vertical - origin
+			origin + offset,
+			lower_left_corner + s*horizontal + t*vertical - origin - offset
 		};
 	}
 
@@ -41,6 +46,8 @@ public:
 	Vec3 lower_left_corner;
 	Vec3 horizontal;
 	Vec3 vertical;
+	Vec3 u, v, w;
+    value_type lens_radius;
 };
 
 }
